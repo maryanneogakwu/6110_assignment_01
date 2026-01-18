@@ -66,6 +66,32 @@ Pangaea is a de novo metagenomic assembler introduced in the paper "Exploring hi
 3. The packages' performance strongly depends on barcode specificity and quality. Older linked-read technologies like 10x Genomics with high fragments-per-barcode, yield poorer results.
 4. Extremely rare microbes with a low abundance of approximately <0.001% remain largely unrecoverable, highlighting a fundamental limitation of current sequencing depths.
 
+### Ragout  
+This is a reference assisted scoffolding tool introduced in the paper "Ragout—a reference-assisted assembly tool for bacterial genomes" by Kolmogorov et. al. in 2014. Ragout is an open-source bioinformatics tool designed to improve draft bacterial genome assemblies by ordering and orienting contigs using multiple complete reference genomes. Ragout is its use of multi-scale synteny blocks combined with iterative scaffolding and assembly graph refinement, allowing it to incorporate both large and small contigs while minimizing misassemblies. It uses multiple related bacterial genomes for assembly, rather than using just a single refernce genome, incorporating evolutionary relationships among references through a phylogenetic tree and uses a genome rearrangement framework to infer the correct ordering of contigs, even in the presence of structural variations such as inversions and translocations. According to the authors "Benchmarking on simulated and real bacterial datasets shows that Ragout consistently produces fewer misordered contigs, higher genome coverage, and fewer scaffolds compared to existing reference-assisted tools such as Mauve Contig Mover, OSLay, and RACA."    
+
+#### Pros of Ragout
+1. The use of multiple refernce genomes reduces errors caused by reliance on a single refernce, ultimately improving robustness in the presence of genome arrangements.  
+2. It provides an improved assembly quality, producing high coverage, fewer scaffolds, less misordered contigs, and near chromosome level assemblies.  
+3. Ragout enables high-quality assemblies from short-read data without requiring expensive long read sequencing, making it a cost effective option.  
+4. It handles structural variation efficiently, performing well when refernce and target genomes differ by inversions, translocations or indels.  
+5. It incorporates evolutionary relationships to make accurate biologically informed contig orders.  
+
+#### Cons of Ragout  
+1. Performance of the program reduces when there are only few or distantly related refernce genomes available. This makes it more difficult to accurately assemble rarer bacterial genomes.
+2. This program is limited to bacterial genomes because it relies on Sibelia for synteny block construction, which works best for closely related microbial species.
+3. There is a risk of refernce bias, making novel genomic structures or strain-specific arrangements in the target genome misassembled.
+4. The use of the breakpoint graph and matching algoryms increase computational complexty campared to simpler scaffolding tools.
+5. It is less effective with highly divergent refernces, resulting in an accuracy decrease when refernces contain extensive rearrangements or break point reuse.
+
+## Planned workflow
+1. Data acquisition: obtaining raw reads as well as the reference genome.  
+2. Raw read Quality Control: carried out with NanoPlot and FastQC, to assess read length and quality to ensure it is suitable for assembly.
+3. De novo Genome Assembly: generating a draft assembly of contigs using the Flye tool.
+4. Assembly Polishing: improving base-level accuracy and producingg a high-quality consensus genome.  
+5. Reference-Assisted Scaffolding with Ragout: order and orient contigs using one or more closely related Salmonella reference genomes to Produce a more complete and biologically accurate genome assembly.
+6. Assembly Evaluation: confirmation of assembly quality, completedness and contiguity.
+7. Variant Calling: alignment to detect genetic differences between your isolate and the reference genome using Minimap2.
+8. Visualization: Visualize genome alignment and structural differences and interpret results to support biological conclusions using IGV for variants and Bandage for an assembly graph  
 
 ## References
 1. BiologyInsights Team. (2025, July 25). *Genome Assembly: How It Works and Why It Matters - Biology Insights*. Biology Insights. https://biologyinsights.com/genome-assembly-how-it-works-and-why-it-matters/
@@ -77,9 +103,10 @@ Pangaea is a de novo metagenomic assembler introduced in the paper "Exploring hi
 7. Eren, K., Taktakoğlu, N., & Pirim, I. (2022). DNA Sequencing Methods: From Past to Present. The Eurasian journal of medicine, 54(Suppl1), 47–56. https://doi.org/10.5152/eurasianjmed.2022.22280
 8. Guo, Y., Song, Y., Jiang, L. et al. A detailed guide to assessing genome assembly based on long-read sequencing data using Inspector. Nat Protoc 20, 2845–2864 (2025). https://doi.org/10.1038/s41596-025-01149-5  
 9. Hotaling, S., Wilcox, E. R., Heckenhauer, J., Stewart, R. J., & Frandsen, P. B. (2023). Highly accurate long reads are crucial for realizing the potential of biodiversity genomics. BMC genomics, 24(1), 117. https://doi.org/10.1186/s12864-023-09193-9
-10. Medina-Medina, N.; Broka, A.; Lacey, S.; Lin, H.; Klings, E.; Baldwin, C.; Steinberg, M.; Sebastiani, P. Comparing Bowtie and BWA to align short reads from a RNA-Seq experiment. In Proceedings of the 6th International Conference on Practical Applications of Computational Biology & Bioinformatics, Salamanca, Spain, 28–30 March 2012; Springer: Berlin/Heidelberg, Germany, 2012.
-11. Nakano, K.; Shiroma, A.; Shimoji, M.; Tamotsu, H.; Ashimine, N.; Ohki, S.; Shinzato, M.; Minami, M.; Nakanishi, T.; Teruya, K. Advantages of genome sequencing by long-read sequencer using SMRT technology in medical area. *Hum. Cell* **2017**, *30*, 149–161.  
-12. Saada, B., Zhang, T., Siga, E., Zhang, J., & Magalhães Muniz, M. M. (2024). Whole-Genome Alignment: Methods, Challenges, and Future Directions. Applied Sciences, 14(11), 4837. https://doi.org/10.3390/app14114837
-13. Sequencing Read Quality Control – Microbial Genome Assembly with Short Reads. (n.d.). https://genomicsaotearoa.github.io/microbial_genomics_short_reads/2.sequencing-read-qc.html  
-14. Tørresen, O.K.; Star, B.; Mier, P.; Andrade-Navarro, M.A.; Bateman, A.; Jarnot, P.; Gruca, A.; Grynberg, M.; Kajava, A.V.; Promponas, V.J. Tandem repeats lead to sequence assembly errors and impose multi-level challenges for genome and protein databases. *Nucleic Acids Res.* **2019**, *47*, 10994–11006.
-15. Zhang, Z., Xiao, J., Wang, H. et al. Exploring high-quality microbial genomes by assembling short-reads with long-range connectivity. Nat Commun 15, 4631 (2024). https://doi.org/10.1038/s41467-024-49060-z   
+10. Medina-Medina, N.; Broka, A.; Lacey, S.; Lin, H.; Klings, E.; Baldwin, C.; Steinberg, M.; Sebastiani, P. Comparing Bowtie and BWA to align short reads from a RNA-Seq experiment. In Proceedings of the 6th International Conference on Practical Applications of Computational Biology & Bioinformatics, Salamanca, Spain, 28–30 March 2012; Springer: Berlin/Heidelberg, Germany, 2012.  
+11. Mikhail Kolmogorov, Brian Raney, Benedict Paten, Son Pham, Ragout—a reference-assisted assembly tool for bacterial genomes, *Bioinformatics*, Volume 30, Issue 12, June 2014, Pages i302–i309, [https://doi.org/10.1093/bioinformatics/btu280](https://doi.org/10.1093/bioinformatics/btu280)  
+12. Nakano, K.; Shiroma, A.; Shimoji, M.; Tamotsu, H.; Ashimine, N.; Ohki, S.; Shinzato, M.; Minami, M.; Nakanishi, T.; Teruya, K. Advantages of genome sequencing by long-read sequencer using SMRT technology in medical area. *Hum. Cell* **2017**, *30*, 149–161.  
+13. Saada, B., Zhang, T., Siga, E., Zhang, J., & Magalhães Muniz, M. M. (2024). Whole-Genome Alignment: Methods, Challenges, and Future Directions. Applied Sciences, 14(11), 4837. https://doi.org/10.3390/app14114837
+14. Sequencing Read Quality Control – Microbial Genome Assembly with Short Reads. (n.d.). https://genomicsaotearoa.github.io/microbial_genomics_short_reads/2.sequencing-read-qc.html  
+15. Tørresen, O.K.; Star, B.; Mier, P.; Andrade-Navarro, M.A.; Bateman, A.; Jarnot, P.; Gruca, A.; Grynberg, M.; Kajava, A.V.; Promponas, V.J. Tandem repeats lead to sequence assembly errors and impose multi-level challenges for genome and protein databases. *Nucleic Acids Res.* **2019**, *47*, 10994–11006.
+16. Zhang, Z., Xiao, J., Wang, H. et al. Exploring high-quality microbial genomes by assembling short-reads with long-range connectivity. Nat Commun 15, 4631 (2024). https://doi.org/10.1038/s41467-024-49060-z   
