@@ -36,52 +36,37 @@ As powerful and efficient as long read and short read assemblies are, both techn
 ## Proposed Algorithms, Pros and Cons  
 
 ### BacSeq  
-The Paper "BacSeq: A User-Friendly Automated Pipeline for Whole-Genome Sequence Analysis of Bacterial Genomes" by Chukamnerd et. al. in 2023, presented an all in one package that carried out multiple funtions and was beginner friendly. It is an open source, java-based GUI that combines multiple tools to simplify bacterial whole genome sequencing. It can performing quality checks, genome assembly, evaluation, annotation, drug resistance and virulence gene detection. The BacSeq pipeline supports pan-genome analysis, SNP-based phylogenetic tree construction, and detection of CAZymes and CRISPR-Cas systems.  
+The Paper "BacSeq: A User-Friendly Automated Pipeline for Whole-Genome Sequence Analysis of Bacterial Genomes" by Chukamnerd et. al. in 2023 [^3], presented an all in one package that carried out multiple funtions and was beginner friendly. It is an open source, java-based GUI that combines multiple tools to simplify bacterial whole genome sequencing. It can performing quality checks, genome assembly, evaluation, annotation, drug resistance and virulence gene detection. The BacSeq pipeline supports pan-genome analysis, SNP-based phylogenetic tree construction, and detection of CAZymes and CRISPR-Cas systems.  
 ####  Pros of the BacSeq package  
 1. The GUI based design reduces reliance on command-line use and makes it is accessible to non-bioinformaticians.  
 2. The program supports hybrid assembly, integrating short and long read sequences, further improving genome completedness.  
-3.  It integrates many widelyused tools like FastQC, SPAdes, Prokka, FastTree and Roary into a single automated workflow.
-4.  Supports clinical and epidemiological diagnostic tests, efficiently identifying antimicrobial resistance genes, virulence factors, SNPs, Plasmids and Phylogenetic Relationships.  
-5.The program can handle multiple isolates simlutaneously, making it suitable for comparative genomics across collections of bacterial genomes.
 
 #### Cons of the BacSeq package  
 1. Despite the package having a user firndly GUI, it only supports Linux systems, which limits the access to MacOS and Windows users.
-2. The package still requires sufficient computational processing power and memory, especially when being used for multi-isolate analyses.
-3. The BacSeq packages is designedd  for isolated bacterial genomes and not complex metagenomic analysis.  
-4. Assembly quality can be reduced if poor quality or contaminated equencing data is included, which leads to fragmented assemblies and misleading downstream results.  
-5. External tools like Kraken aree required to detect or remove contaminant sequences, undermining the "one package does it all" goal.  
+2. The package still requires sufficient computational processing power and memory, especially when being used for multi-isolate analyses. 
 
 ### Pangaea
-Pangaea is a de novo metagenomic assembler introduced in the paper "Exploring high-quality microbial genomes by assembling short-reads with long-range connectivity" by Zhang et. al. in 2024. It was designed to improve genome reconstruction from short reads with physical barcodes (linked-reads) or virtual barcodes (derived from aligning short-reads to long-reads). Pangaea focuses on reducing assembly complexity and addressing the challenges posed by highly uneven microbial abundances.This program provides a scalable and reference-free solution for recovering high-quality microbial genomes, making it particularly valuable for population-scale and clinical metagenomic studies. Although this software is meant for genome assembly without use of a scaffold, an the assignment requires alignment of the assembled genome with a refernce genome, I wanted to include it in my my write up, as it I feel it is a good tool and would like to learn how to use it.  
+Pangaea is a de novo metagenomic assembler introduced in the paper "Exploring high-quality microbial genomes by assembling short-reads with long-range connectivity" by Zhang et. al. in 2024 [^18]. It was designed to improve genome reconstruction from short reads with physical barcodes (linked-reads) or virtual barcodes (derived from aligning short-reads to long-reads). Pangaea focuses on reducing assembly complexity and addressing the challenges posed by highly uneven microbial abundances.  
 
 #### Pros of Pangaea package  
 1. It is a cost efficient alternative to long read sequencing, as it achieves near-complete and even circular microbial genomes using short-reads with long-range connectivity, reducing reliance on expensive deep long-read sequencing.
-2. It is generalizable to hybrid assemblies, meaning it can also work with virtual barcodes derived from short–long read hybrid data, extending its usefulness beyond linked-read technologies.
-3. There is a recovery of high quality genomes due to the generation of multiple near-complete and circular MAGs demonstrates the method’s ability to reconstruct biologically meaningful, high-quality genomes.
-4. There is a strong performance across abundance ranges as the combination of co-barcoded read binning and multi-thresholding reassembly improves assemblies for high-, medium-, and low-abundance microbes, which is a major limitation of many existing assemblers.  
+2. It is generalizable to hybrid assemblies, meaning it can also work with virtual barcodes derived from short–long read hybrid data, extending its usefulness beyond linked-read technologies. 
 
 #### Cons of Pangaea package
 1. Computational complexity due to the use of deep learning (VAE-based binning), multiple assembly stages, and ensemble merging increases computational cost and pipeline complexity compared to standard short-read assemblers.
 2. There is more focus on gut microbiomes as most real-data benchmarking is on human gut samples so the program's performance in other complex environments like soil, marine and host-associated niches remains to be fully demonstrated.
-3. The packages' performance strongly depends on barcode specificity and quality. Older linked-read technologies like 10x Genomics with high fragments-per-barcode, yield poorer results.
-4. Extremely rare microbes with a low abundance of approximately <0.001% remain largely unrecoverable, highlighting a fundamental limitation of current sequencing depths.
 
 ### Ragout  
-This is a reference assisted scoffolding tool introduced in the paper "Ragout—a reference-assisted assembly tool for bacterial genomes" by Kolmogorov et. al. in 2014. Ragout is an open-source bioinformatics tool designed to improve draft bacterial genome assemblies by ordering and orienting contigs using multiple complete reference genomes. Ragout is its use of multi-scale synteny blocks combined with iterative scaffolding and assembly graph refinement, allowing it to incorporate both large and small contigs while minimizing misassemblies. It uses multiple related bacterial genomes for assembly, rather than using just a single refernce genome, incorporating evolutionary relationships among references through a phylogenetic tree and uses a genome rearrangement framework to infer the correct ordering of contigs, even in the presence of structural variations such as inversions and translocations. According to the authors "Benchmarking on simulated and real bacterial datasets shows that Ragout consistently produces fewer misordered contigs, higher genome coverage, and fewer scaffolds compared to existing reference-assisted tools such as Mauve Contig Mover, OSLay, and RACA."    
+This is a reference assisted scoffolding tool introduced in the paper "Ragout—a reference-assisted assembly tool for bacterial genomes" by Kolmogorov et. al. in 2014 [^11]. Ragout is an open-source bioinformatics tool designed to improve draft bacterial genome assemblies by ordering and orienting contigs using multiple complete reference genomes. Ragout is its use of multi-scale synteny blocks combined with iterative scaffolding and assembly graph refinement, allowing it to incorporate both large and small contigs while minimizing misassemblies. It uses multiple related bacterial genomes for assembly, rather than using just a single refernce genome, incorporating evolutionary relationships among references through a phylogenetic tree and uses a genome rearrangement framework to infer the correct ordering of contigs, even in the presence of structural variations such as inversions and translocations.    
 
 #### Pros of Ragout
 1. The use of multiple refernce genomes reduces errors caused by reliance on a single refernce, ultimately improving robustness in the presence of genome arrangements.  
-2. It provides an improved assembly quality, producing high coverage, fewer scaffolds, less misordered contigs, and near chromosome level assemblies.  
-3. Ragout enables high-quality assemblies from short-read data without requiring expensive long read sequencing, making it a cost effective option.  
-4. It handles structural variation efficiently, performing well when refernce and target genomes differ by inversions, translocations or indels.  
-5. It incorporates evolutionary relationships to make accurate biologically informed contig orders.  
+2. It provides an improved assembly quality, producing high coverage, fewer scaffolds, less misordered contigs, and near chromosome level assemblies.    
 
 #### Cons of Ragout  
 1. Performance of the program reduces when there are only few or distantly related refernce genomes available. This makes it more difficult to accurately assemble rarer bacterial genomes.
 2. This program is limited to bacterial genomes because it relies on Sibelia for synteny block construction, which works best for closely related microbial species.
 3. There is a risk of refernce bias, making novel genomic structures or strain-specific arrangements in the target genome misassembled.
-4. The use of the breakpoint graph and matching algoryms increase computational complexty campared to simpler scaffolding tools.
-5. It is less effective with highly divergent refernces, resulting in an accuracy decrease when refernces contain extensive rearrangements or break point reuse.
 
 ## Planned workflow
 1. Data acquisition: obtaining raw reads as well as the reference genome.  
@@ -92,17 +77,60 @@ This is a reference assisted scoffolding tool introduced in the paper "Ragout—
 6. Variant Calling: alignment to detect genetic differences between your isolate and the reference genome using Minimap2.
 7. Visualization: Visualize genome alignment and structural differences and interpret results to support biological conclusions using IGV for variants and Bandage for an assembly graph
 
+## Packeges used for Analysis
+
+### Flye (Genome Assembly)
+Flye [Flye(v2.9.6)](https://github.com/mikolmogorov/Flye) used to assemble long Oxford Nanopore reads into contiguous genome sequences without a reference genome. It is specifically optimized for noisy long reads and performs well with bacterial genomes. Flye produces long contigs and handles repeats effectively using repeat graphs. However, assemblies may still contain base-level errors due to long-read error rates [^20]. It also requires an estimated genome size and correct read type selection [^21].
+
+Pros: Excellent for long reads, high contiguity, good repeat handling [^22].
+Cons: Base errors remain, needs correct parameters, computationally heavy [^22].
+
+## Minimap2 (Alignment)
+
+Minimap2 [Minimap2 (v2.30)](https://github.com/lh3/minimap2) used to align the assembled genome and raw reads to the NCBI reference genome. It is fast and designed for long-read and assembly alignment, supporting multiple presets for different tasks. The tool produces accurate SAM files for downstream analysis such as variant calling [^23]. However, choosing the wrong preset can lead to poor alignments. It also does not perform variant calling itself, only alignment.
+
+Pros: Very fast, versatile presets, accurate for long reads and assemblies[^23].
+Cons: Preset confusion, alignment only (no analysis), command complexity [^23].
+
+## SeqKit (Assembly Quality Assessment)
+
+SeqKit used to examine basic statistics of the assembled genome such as sequence length, GC content, and overall composition. It provides fast, command-line summaries that help verify the integrity and characteristics of FASTA/FASTQ files before deeper analysis. SeqKit is lightweight and efficient, making it ideal for quick validation of assembly outputs. However, it only reports descriptive statistics and does not assess assembly accuracy or misassemblies. It is best used as a preliminary quality check alongside tools like QUAST [^27].
+
+Pros: Very fast, simple commands, useful summary statistics, lightweight [^27].
+Cons: No alignment or accuracy assessment, limited to descriptive metrics [^27].
+
+## Samtools (SAM/BAM Processing)
+
+Samtools [samtools (v1.23)](https://github.com/samtools/samtools) used to convert, sort, and index alignment files from SAM to BAM format. It is essential for preparing alignment files for efficient access and visualization. The tool allows filtering, viewing, and manipulating large alignment datasets quickly. However, command syntax can be unintuitive and version mismatches can cause library errors. It also does not perform analysis beyond file handling [^24].
+
+Pros: Fast file processing, essential for BAM handling, widely compatible [^24].
+Cons: Cryptic commands, dependency issues, not analytical [^24]. 
+
+## BCFtools (Variant Calling)
+
+BCFtools [samtools (v1.23)](https://github.com/samtools/samtools) to call genetic variants by comparing aligned raw reads to the reference genome. It works directly with BAM files and produces VCF files listing SNPs and indels. The tool is efficient and integrates seamlessly with Samtools. However, default parameters may not be optimal for long-read data and require tuning. Interpretation of the VCF output also requires additional visualization tools [^25].
+
+Pros: Fast variant calling, integrates with Samtools, standard VCF output [^25].
+Cons: Needs parameter tuning, less optimized for long reads, complex output [^25].
+
+## IGV (Visualization)
+
+IGV  [IGV (v2.19.7)](https://github.com/igvteam/igv) to visually inspect alignments and confirm variant positions in the genome. It provides an interactive interface to explore reads, coverage, and mutations at specific loci. This makes it ideal for validating variant calls and identifying hotspots. However, large files can load slowly and correct file formatting is required. It is also manual and not suitable for automated analysis [^26].
+
+Pros: Clear visual validation, interactive, easy to interpret variants [^26].
+Cons: Slow with large files, strict file requirements, manual inspection [^26].
+
 ##  Methods
 ### 1. Data Acquisition:
 Raw Oxford Nanopore Reads obtained in FASTQ format from https://trace.ncbi.nlm.nih.gov/Traces/?run=SRR32410565 and the reference _Salmonella enterica_ (NCBI RefSeq assembly ASM695V2 GCF_000006945.2) were obtained from the NCBI database
 
 ### 2. Raw read Quality Control
-Raw read length were inspected using [Nanoplot (v1.46.2)] (https://github.com/wdecoster/NanoPlot) to determine the need for filtering out lower quality sequences. Eventually determining that filtering the reads could reduce coverage by removing the short reads that could contain complexitty , reducing assembly quality. 
+Raw read length were inspected using [Nanoplot (v1.46.2)](https://github.com/wdecoster/NanoPlot) to determine the need for filtering out lower quality sequences. Eventually determining that filtering the reads could reduce coverage by removing the short reads that could contain complexitty , reducing assembly quality. 
 ~~~
 NanoPlot --fastq SRR32410565.1.fastq -o nanoplot_output/
 ~~~
 
-### 3. De novo Genome Assembly using 
+### 3. De novo Genome Assembly using Flye
 After quality control checks, the genome was assembled from the raw reads using [Flye(v2.9.6)](https://github.com/mikolmogorov/Flye). The number of threads used was 4, genome size was -809.3m, and the -hq flag was used because it is already expected that raw reads from Oxford nanopore are of higher quality high quality.
 ~~~
 flye --nano-hq SRR32410565.1.fastq \
@@ -188,7 +216,7 @@ theme_minimal()
 <img width="1857" height="894" alt="snp identified" src="https://github.com/user-attachments/assets/60e65d1f-dfcd-4660-b85e-a6eeba5c8ab8" />
 
 **Figure 1:** **IGV Visualisation of a prominent SNP present in the reads**.
-There are significatly marked SNPS at position NC_003197.2:103,018. with a base quality of QV 50. This shows that the reads have an insertion of G in the place of T. The G in the reads differ from the reference sequence in greater than 20 percent (20%) the quality weigthed reads. 99% of the reads have guanine as an insertion, with a total count of 179 Guanine insertions. 
+There are significatly marked SNPS at position NC_003197.2:103,018. with a base quality of QV 50. This shows that the reads have an insertion of G in the place of T. The G in the reads differ from the reference sequence in greater than 20 percent (20%) the quality weigthed reads. 99% of the reads have Guanine as an insertion, with a total count of 179 Guanine insertions. 
 
 <img width="1854" height="890" alt="real fake" src="https://github.com/user-attachments/assets/4c4b4223-43d1-4ca2-9fca-56fda24f3c10" />
 
@@ -230,3 +258,12 @@ This heatmap shows how variants are distributed along the genome in 10 kb window
 [^18] Zhang, Z., Xiao, J., Wang, H. et al. Exploring high-quality microbial genomes by assembling short-reads with long-range connectivity. Nat Commun 15, 4631 (2024). 
 [^19]: Nanopore - variant calling – nanopore sequencing. (n.d.). Software Carpentry - Nanopore Sequencing. https://otagobioinformaticsspringschool.github.io/nanopore/05-nanopore-variantcalling/index.html
 https://doi.org/10.1038/s41467-024-49060-z   
+[^20] Qin, M., Wu, S., Li, A. et al. LRScaf: improving draft genomes using long noisy reads. BMC Genomics 20, 955 (2019). https://doi.org/10.1186/s12864-019-6337-2.
+[^21] Flye - OmicsBox User Manual. (n.d.). https://docs.omicsbox.biobam.com/latest/Flye/
+[^22] Genome Assembly: Hands-on Training: Oxford Nanopore Assembly using Flye. (2025, November 11). https://rcac-bioinformatics.github.io/genome-assembly/oxford-nanopore-assembly.html
+[^23] Minimap2.1. (n.d.). https://lh3.github.io/minimap2/minimap2.html
+[^24] samtools – Bioinformatics guidance page. (n.d.). https://scienceparkstudygroup.github.io/ibed-bioinformatics-page/source/core_tools/samtools.html
+[^25] Variant calling and genotyping with bcftools | MSc Genomic Medicine CM4 module. (n.d.). https://www.chg.ox.ac.uk/bioinformatics/training/msc_gm/2024/live/bioinformatics_pipelines_for_NGS_data/extras/variant_calling/variant_calling_with_bcftools/
+[^26] Robinson, J. T., Thorvaldsdóttir, H., Wenger, A. M., Zehir, A., & Mesirov, J. P. (2017). Variant Review with the Integrative Genomics Viewer. Cancer research, 77(21), e31–e34. https://doi.org/10.1158/0008-5472.CAN-17-0337
+[^27] Shen, W., Sipos, B., & Zhao, L. (2024). SeqKit2: A Swiss army knife for sequence and alignment processing. iMeta, 3(3), e191. https://doi.org/10.1002/imt2.191
+
