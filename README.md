@@ -158,6 +158,55 @@ The results of the table below show thatthe genome is SNP-rich with very few ind
 | Number of multiallelic SNP sites| 139    |
 
 ### 7. Visualization
+Visualization of relevant SNPs observed between the alignment of the  reference genome and the raw reads was carried out using using [IGV (v2.19.7)](https://github.com/igvteam/igv).Graphical representation of Variant distribution and  frequency was carried out using R and R studio [R (4.5.1)](https://www.r-project.org/).
+The variant density plot was created to show how the SNPs were distributed throught the alignment.
+~~~
+awk '{
+window = int($2/10000);
+counts[window]++
+}
+END {
+for (w in counts)
+print w*10000, counts[w]
+}' variant_positions.tsv | sort -n > variant_density.tsv
+~~~
+The heatmap was created to show how the occurence of the SNPs varied throught the alignmnet.
+~~~
+bin_size <- 10000  # 10 kb windows
+
+variants$bin <- floor(variants$pos / bin_size)
+
+heat <- as.data.frame(table(variants$bin))
+colnames(heat) <- c("bin", "count")
+
+ggplot(heat, aes(x=as.numeric(bin), y=1, fill=count)) +
+geom_tile() +
+scale_fill_gradient() +
+labs(x="Genome Window (10kb bins)", y="", title="Variant Density Heatmap") +
+theme_minimal()
+~~~
+<img width="1857" height="894" alt="snp identified" src="https://github.com/user-attachments/assets/60e65d1f-dfcd-4660-b85e-a6eeba5c8ab8" />
+
+**Figure 1:** **IGV Visualisation of a prominent SNP present in the reads**.
+There are significatly marked SNPS at position NC_003197.2:103,018. with a base quality of QV 50. This shows that the reads have an insertion of G in the place of T. The G in the reads differ from the reference sequence in greater than 20 percent (20%) the quality weigthed reads. 99% of the reads have guanine as an insertion, with a total count of 179 Guanine insertions. 
+
+<img width="1854" height="890" alt="real fake" src="https://github.com/user-attachments/assets/4c4b4223-43d1-4ca2-9fca-56fda24f3c10" />
+
+**Figure 2:** **IGV visualisation of an incorrectly called heterozygous SNP**. 
+At position NC_003197.2:3,963,935 there seems to be a heterozygous SNP variance, but this is not the case. Although IGV flags this site as heterozygous, bacterial genomes are haploid. The overwhelming majority of reads (97%) support a T at this position while the reference shows A, confirming a true SNP. The remaining bases represent sequencing noise typical of ONT reads. 
+
+<img width="455" height="305" alt="density plot variant" src="https://github.com/user-attachments/assets/00d048d3-a1fb-4544-ae22-a1ab0b34ee72" />
+
+**Figure 3** **Density Plot of the Variant SNPs in the alignment**.
+The x-axis shows genome position, and the y-axis shows how many variants occur in each 10 kb window. Most regions have very few variants, meaning your genome is highly similar to the reference. The sharp peaks mark mutation “hotspots” where many differences are concentrated in specific regions.
+
+<img width="455" height="305" alt="variant density heatmap" src="https://github.com/user-attachments/assets/3140502e-3368-42f3-a6ce-082c889bea90" /> 
+
+**Figure 3** **Heatmap showing the density and distribution  of variants in the alignment**.
+This heatmap shows how variants are distributed along the genome in 10 kb windows. Most regions have few variants, indicating strong similarity to the reference genome. Bright regions represent mutation hotspots where variants are highly concentrated.
+
+
+
 
 
 ## References
