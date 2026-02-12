@@ -213,6 +213,8 @@ scale_fill_gradient() +
 labs(x="Genome Window (10kb bins)", y="", title="Variant Density Heatmap") +
 theme_minimal()
 ~~~
+
+## Results
 <img width="1857" height="894" alt="snp identified" src="https://github.com/user-attachments/assets/60e65d1f-dfcd-4660-b85e-a6eeba5c8ab8" />
 
 **Figure 1:** **IGV Visualisation of a prominent SNP present in the reads**.
