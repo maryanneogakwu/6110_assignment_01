@@ -228,7 +228,7 @@ At position NC_003197.2:3,963,935 there seems to be a heterozygous SNP variance,
 <img width="455" height="305" alt="density plot variant" src="https://github.com/user-attachments/assets/00d048d3-a1fb-4544-ae22-a1ab0b34ee72" />
 
 **Figure 3** **Density Plot of the Variant SNPs in the alignment**.
-The x-axis shows genome position, and the y-axis shows how many variants occur in each 10 kb window. Most regions have very few variants, meaning your genome is highly similar to the reference. The sharp peaks mark mutation “hotspots” where many differences are concentrated in specific regions.
+The x-axis shows genome position, and the y-axis shows how many variants occur in each 10 kb window. Most regions have very few variants, meaning the genome is highly similar to the reference. The sharp peaks mark mutation “hotspots” where many differences are concentrated in specific regions.
 
 <img width="455" height="305" alt="variant density heatmap" src="https://github.com/user-attachments/assets/3140502e-3368-42f3-a6ce-082c889bea90" /> 
 
@@ -241,10 +241,16 @@ This heatmap shows how variants are distributed along the genome in 10 kb window
 This rainfall plot displays each variant by genomic position on the x-axis and the log10 distance to the previous variant on the y-axis, allowing spatial mutation patterns to be visualized across NC_003197.2 and NC_003277.2. Lower y-values indicate variants occurring very close together, revealing mutation hotspots and regions of high variant density along the genome. While higher y-values represent large gaps between variants, highlighting conserved regions with relatively few sequence changes. The faceted layout shows that the plasmid (NC_003277.2) exhibits tighter clustering of variants compared to the chromosome, suggesting localized regions of higher variability. Color coding distinguishes SNPs, insertions, and deletions, demonstrating that SNPs dominate the clustered regions while indels are more sparsely distributed.
 
 ## Discussion
+#### Assembly Quality
+The assembly produced four contigs with high sequencing coverage, indicating strong read support and reliable consensus generation across the genome. The two largest contigs (3.32 Mb and 1.68 Mb) show coverage above 120× and are marked as non-circular, suggesting they represent the primary chromosomal segments that were not fully resolved into a single continuous sequence. Their large sizes and absence of repeats imply that the assembler was able to resolve most genomic complexity, but structural features such as unresolved joins or complex regions likely prevented full circularization. The third contig (109 kb) is marked as circular with very high coverage (188×), strongly indicating that this sequence represents a plasmid. Circularity combined with elevated coverage is characteristic of plasmid DNA, as plasmids often exist in multiple copies within bacterial cells, leading to higher read depth relative to the chromosome. The clean assembly of this contig without repeats further supports that the assembler successfully reconstructed this plasmid as a complete, biologically meaningful unit.
+The smallest contig (6.2 kb) displays lower coverage (73×) and is flagged as containing repeats. This suggests it may represent a repetitive or low-complexity region that the assembler could not confidently place within the larger chromosomal contigs. Such small repeat-associated contigs are common in long-read assemblies and often arise from unresolved repeat structures or mobile genetic elements that cannot be uniquely anchored in the genome graph.
+Overall, the assembly demonstrates strong workflow success: high coverage across all contigs, successful identification of a circular plasmid, and near-complete reconstruction of the chromosomal content. The presence of two large non-circular chromosomal contigs and one small repeat contig indicates minor fragmentation likely due to complex genomic regions rather than insufficient data quality. This reflects a high-quality long-read assembly where most biological structure is preserved, with only small unresolved repeat-driven segments remaining.
 
-The IGV inspections (Figures 1 and 2) validate the reliability of the variant calls and highlight the importance of manual curation alongside automated pipelines. At **NC_003197.2:103,018**, the strong read support and high base quality confirm a true SNP where guanine consistently replaces the reference thymine, demonstrating accurate alignment and confident variant detection. In contrast, the site flagged as “heterozygous” at **NC_003197.2:3,963,935** illustrates a common visualization artifact in haploid bacterial genomes, where minor sequencing noise from ONT reads can mimic mixed alleles. This reinforces that apparent heterozygosity in bacteria should be interpreted cautiously and assessed in the context of read proportions and sequencing error profiles.
+#### The IGV inspections
+(Figures 1 and 2) validate the reliability of the variant calls and highlight the importance of manual curation alongside automated pipelines. At **NC_003197.2:103,018**, the strong read support and high base quality confirm a true SNP where guanine consistently replaces the reference thymine, demonstrating accurate alignment and confident variant detection. In contrast, the site flagged as “heterozygous” at **NC_003197.2:3,963,935** illustrates a common visualization artifact in haploid bacterial genomes, where minor sequencing noise from ONT reads can mimic mixed alleles. This reinforces that apparent heterozygosity in bacteria should be interpreted cautiously and assessed in the context of read proportions and sequencing error profiles.
 
-The genome-wide visualizations (Figures 3 and 4) further reveal that most of the genome shows very low variant density, indicating strong similarity between the assembled genome and the reference. However, distinct peaks in the density plot and bright regions in the heatmap identify mutation hotspots where differences are concentrated within specific 10 kb windows. These localized clusters suggest regions of elevated evolutionary change rather than uniform divergence across the chromosome. Such patterns are typical of genomic regions under selective pressure, mobile genetic elements, or recombination-prone sites.
+#### Genome-wide visualizations 
+(Figures 3 and 4) further reveal that most of the genome shows very low variant density, indicating strong similarity between the assembled genome and the reference. However, distinct peaks in the density plot and bright regions in the heatmap identify mutation hotspots where differences are concentrated within specific 10 kb windows. These localized clusters suggest regions of elevated evolutionary change rather than uniform divergence across the chromosome. Such patterns are typical of genomic regions under selective pressure, mobile genetic elements, or recombination-prone sites.
 
 The rainfall plot provides additional resolution by showing how variants are spaced relative to one another across both the chromosome (**NC_003197.2**) and the plasmid (**NC_003277.2**). The tighter clustering of variants on the plasmid compared to the chromosome indicates that the plasmid is more variable and may be undergoing faster evolutionary change. The dominance of SNPs within these clusters, with fewer insertions and deletions, suggests that point mutations are the primary driver of sequence divergence in this dataset. Together, these observations demonstrate that while the assembly is largely conserved relative to the reference, specific genomic regions—particularly on the plasmid—exhibit concentrated variability with potential biological significance.
 
@@ -269,14 +275,38 @@ The rainfall plot provides additional resolution by showing how variants are spa
 ^[16]: Tamang, S. (2025, April 24). Short-Read Sequencing: Principle, process, examples, uses. Microbe Notes. https://microbenotes.com/short-read-sequencing/  
 [^17]: Tørresen, O.K.; Star, B.; Mier, P.; Andrade-Navarro, M.A.; Bateman, A.; Jarnot, P.; Gruca, A.; Grynberg, M.; Kajava, A.V.; Promponas, V.J. Tandem repeats lead to sequence assembly errors and impose multi-level challenges for genome and protein databases. *Nucleic Acids Res.* **2019**, *47*, 10994–11006.
 [^18] Zhang, Z., Xiao, J., Wang, H. et al. Exploring high-quality microbial genomes by assembling short-reads with long-range connectivity. Nat Commun 15, 4631 (2024). 
-[^19]: Nanopore - variant calling – nanopore sequencing. (n.d.). Software Carpentry - Nanopore Sequencing. https://otagobioinformaticsspringschool.github.io/nanopore/05-nanopore-variantcalling/index.html
-https://doi.org/10.1038/s41467-024-49060-z   
+[^19]: Nanopore - variant calling – nanopore sequencing. (n.d.). Software Carpentry - Nanopore Sequencing. https://otagobioinformaticsspringschool.github.io/nanopore/05-nanopore-variantcalling/index.html https://doi.org/10.1038/s41467-024-49060-z   
 [^20] Qin, M., Wu, S., Li, A. et al. LRScaf: improving draft genomes using long noisy reads. BMC Genomics 20, 955 (2019). https://doi.org/10.1186/s12864-019-6337-2.
+
 [^21] Flye - OmicsBox User Manual. (n.d.). https://docs.omicsbox.biobam.com/latest/Flye/
+
 [^22] Genome Assembly: Hands-on Training: Oxford Nanopore Assembly using Flye. (2025, November 11). https://rcac-bioinformatics.github.io/genome-assembly/oxford-nanopore-assembly.html
+
 [^23] Minimap2.1. (n.d.). https://lh3.github.io/minimap2/minimap2.html
-[^24] samtools – Bioinformatics guidance page. (n.d.). https://scienceparkstudygroup.github.io/ibed-bioinformatics-page/source/core_tools/samtools.html
+
+[^24] samtools – Bioinformatics guidance page. (n.d.).https://scienceparkstudygroup.github.io/ibed-bioinformaticspage/source/core_tools/samtools.html
+
 [^25] Variant calling and genotyping with bcftools | MSc Genomic Medicine CM4 module. (n.d.). https://www.chg.ox.ac.uk/bioinformatics/training/msc_gm/2024/live/bioinformatics_pipelines_for_NGS_data/extras/variant_calling/variant_calling_with_bcftools/
+
 [^26] Robinson, J. T., Thorvaldsdóttir, H., Wenger, A. M., Zehir, A., & Mesirov, J. P. (2017). Variant Review with the Integrative Genomics Viewer. Cancer research, 77(21), e31–e34. https://doi.org/10.1158/0008-5472.CAN-17-0337
+
 [^27] Shen, W., Sipos, B., & Zhao, L. (2024). SeqKit2: A Swiss army knife for sequence and alignment processing. iMeta, 3(3), e191. https://doi.org/10.1002/imt2.191
+
+## Software Versions & Reproducibility
+Software used for the analysis was installed via **Bioconda** and **Conda-forge** and executed within a conda environment (**Miniconda**) on an **Linux System**.
+All analyses were performed using open-source software. Software versions and parameters are documented to support reproducibility of the workflow.
+
+
+ Tool | Version |
+|------|---------|
+| SRA -tools | 3.0.5 |
+| Flye | 2.9.6 |
+| Seqkit | 2.10.1 |
+| NanoPlot | 1.46.1 |
+| Filtlong | 0.3.1 |
+| minimap2 | 2.30 |
+| samtools | 1.23 |
+| bcftools| 2.21 |
+| IGV | 2.19.7 |
+| R | 4.3.1 |
 
