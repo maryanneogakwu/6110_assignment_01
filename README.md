@@ -235,6 +235,11 @@ The x-axis shows genome position, and the y-axis shows how many variants occur i
 **Figure 3** **Heatmap showing the density and distribution  of variants in the alignment**.
 This heatmap shows how variants are distributed along the genome in 10 kb windows. Most regions have few variants, indicating strong similarity to the reference genome. Bright regions represent mutation hotspots where variants are highly concentrated.
 
+<img width="1000" height="500" alt="Rainfall plot" src="https://github.com/user-attachments/assets/cd5846b1-fe57-463b-92a0-44228c70c66b" />
+
+**Figure 4** **Rainfall Plot showing the distribution of SNPs, insertions and delections** 
+This rainfall plot displays each variant by genomic position on the x-axis and the log10 distance to the previous variant on the y-axis, allowing spatial mutation patterns to be visualized across NC_003197.2 and NC_003277.2. Lower y-values indicate variants occurring very close together, revealing mutation hotspots and regions of high variant density along the genome. While higher y-values represent large gaps between variants, highlighting conserved regions with relatively few sequence changes. The faceted layout shows that the plasmid (NC_003277.2) exhibits tighter clustering of variants compared to the chromosome, suggesting localized regions of higher variability. Color coding distinguishes SNPs, insertions, and deletions, demonstrating that SNPs dominate the clustered regions while indels are more sparsely distributed.
+
 
 
 
