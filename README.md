@@ -48,7 +48,7 @@
 ## Overview
 This repository is for my BINF 6110 assignment 1. It will contain a Markdown file detailing genome assembly and challanges in genome assembly and alignment with a reference genome.  Down the line it will be updated with the code I'll use t assemble a specified genome and the alignment. The project will involve assembly of raw Oxford Nanopore reads, gene mapping of raw reads to the refernce genome,and visualization of variants (SNPs) displayed between the raw reads nad the reference genome. Both the raw and _Salmonella enterica_ raw reads and the _Salmonella enterica_ were obtained through the NCBI database.
 
-## **1 | Introduction**
+## **1 Introduction**
 #### Genome Assembly
 Genome Assembly Involves reconstructing an organism's genome using fragments of sequenced DNA, called sequence reads [^1]. Common sequencing methods include Illumina sequencing, Oxford Nanopore, PacBio sequencing and Sangers sequencing, which pioneered sequencing techniques in the 70s [^7]. 
 #### Whole Genome Alignment
