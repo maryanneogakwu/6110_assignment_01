@@ -1,0 +1,3 @@
+The following figures are the results from filtering with q20 on the raw reads using the filtlong.
+The rest of the analysis was carried out witt the  unfiltered raw reads because Oxford Nanopore Reads are already expected to be of high quality.
+The figures will still be included to show the differences filtering made on the raw reads.
