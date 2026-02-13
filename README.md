@@ -312,28 +312,21 @@ The rainfall plot provides additional resolution by showing how variants are spa
 [^10]: Medina-Medina, N.; Broka, A.; Lacey, S.; Lin, H.; Klings, E.; Baldwin, C.; Steinberg, M.; Sebastiani, P. Comparing Bowtie and BWA to align short reads from a RNA-Seq experiment. In Proceedings of the 6th International Conference on Practical Applications of Computational Biology & Bioinformatics, Salamanca, Spain, 28–30 March 2012; Springer: Berlin/Heidelberg, Germany, 2012.  
 [^11]: Mikhail Kolmogorov, Brian Raney, Benedict Paten, Son Pham, Ragout—a reference-assisted assembly tool for bacterial genomes, *Bioinformatics*, Volume 30, Issue 12, June 2014, Pages i302–i309, [https://doi.org/10.1093/bioinformatics/btu280](https://doi.org/10.1093/bioinformatics/btu280)  
 [^12]: Nakano, K.; Shiroma, A.; Shimoji, M.; Tamotsu, H.; Ashimine, N.; Ohki, S.; Shinzato, M.; Minami, M.; Nakanishi, T.; Teruya, K. Advantages of genome sequencing by long-read sequencer using SMRT technology in medical area. *Hum. Cell* **2017**, *30*, 149–161. 
-[^13] Saada, B., Zhang, T., Siga, E., Zhang, J., & Magalhães Muniz, M. M. (2024). Whole-Genome Alignment: Methods, Challenges, and Future Directions. Applied Sciences, 14(11), 4837. https://doi.org/10.3390/app14114837  
+[^13]: Saada, B., Zhang, T., Siga, E., Zhang, J., & Magalhães Muniz, M. M. (2024). Whole-Genome Alignment: Methods, Challenges, and Future Directions. Applied Sciences, 14(11), 4837. https://doi.org/10.3390/app14114837  
 [^14]: seqWell. (2024, December 11). Short-Read Sequencing vs. Long-Read Sequencing: Which Technology is Right for Your Research? seqWell, Inc. https://seqwell.com/short-read-sequencing-vs-long-read-sequencing-which-technology-is-right-for-your-research/  
 [^15]: Sequencing Read Quality Control – Microbial Genome Assembly with Short Reads. (n.d.). https://genomicsaotearoa.github.io/microbial_genomics_short_reads/2.sequencing-read-qc.html  
-^[16]: Tamang, S. (2025, April 24). Short-Read Sequencing: Principle, process, examples, uses. Microbe Notes. https://microbenotes.com/short-read-sequencing/  
+[^16]: Tamang, S. (2025, April 24). Short-Read Sequencing: Principle, process, examples, uses. Microbe Notes. https://microbenotes.com/short-read-sequencing/  
 [^17]: Tørresen, O.K.; Star, B.; Mier, P.; Andrade-Navarro, M.A.; Bateman, A.; Jarnot, P.; Gruca, A.; Grynberg, M.; Kajava, A.V.; Promponas, V.J. Tandem repeats lead to sequence assembly errors and impose multi-level challenges for genome and protein databases. *Nucleic Acids Res.* **2019**, *47*, 10994–11006.
-[^18] Zhang, Z., Xiao, J., Wang, H. et al. Exploring high-quality microbial genomes by assembling short-reads with long-range connectivity. Nat Commun 15, 4631 (2024). 
+[^18]: Zhang, Z., Xiao, J., Wang, H. et al. Exploring high-quality microbial genomes by assembling short-reads with long-range connectivity. Nat Commun 15, 4631 (2024). 
 [^19]: Nanopore - variant calling – nanopore sequencing. (n.d.). Software Carpentry - Nanopore Sequencing. https://otagobioinformaticsspringschool.github.io/nanopore/05-nanopore-variantcalling/index.html https://doi.org/10.1038/s41467-024-49060-z   
-[^20] Qin, M., Wu, S., Li, A. et al. LRScaf: improving draft genomes using long noisy reads. BMC Genomics 20, 955 (2019). https://doi.org/10.1186/s12864-019-6337-2.
-
-[^21] Flye - OmicsBox User Manual. (n.d.). https://docs.omicsbox.biobam.com/latest/Flye/
-
-[^22] Genome Assembly: Hands-on Training: Oxford Nanopore Assembly using Flye. (2025, November 11). https://rcac-bioinformatics.github.io/genome-assembly/oxford-nanopore-assembly.html
-
-[^23] Minimap2.1. (n.d.). https://lh3.github.io/minimap2/minimap2.html
-
-[^24] samtools – Bioinformatics guidance page. (n.d.).https://scienceparkstudygroup.github.io/ibed-bioinformaticspage/source/core_tools/samtools.html
-
-[^25] Variant calling and genotyping with bcftools | MSc Genomic Medicine CM4 module. (n.d.). https://www.chg.ox.ac.uk/bioinformatics/training/msc_gm/2024/live/bioinformatics_pipelines_for_NGS_data/extras/variant_calling/variant_calling_with_bcftools/
-
-[^26] Robinson, J. T., Thorvaldsdóttir, H., Wenger, A. M., Zehir, A., & Mesirov, J. P. (2017). Variant Review with the Integrative Genomics Viewer. Cancer research, 77(21), e31–e34. https://doi.org/10.1158/0008-5472.CAN-17-0337
-
-[^27] Shen, W., Sipos, B., & Zhao, L. (2024). SeqKit2: A Swiss army knife for sequence and alignment processing. iMeta, 3(3), e191. https://doi.org/10.1002/imt2.191
+[^20]: Qin, M., Wu, S., Li, A. et al. LRScaf: improving draft genomes using long noisy reads. BMC Genomics 20, 955 (2019). https://doi.org/10.1186/s12864-019-6337-2.
+[^21]: Flye - OmicsBox User Manual. (n.d.). https://docs.omicsbox.biobam.com/latest/Flye/
+[^22]: Genome Assembly: Hands-on Training: Oxford Nanopore Assembly using Flye. (2025, November 11). https://rcac-bioinformatics.github.io/genome-assembly/oxford-nanopore-assembly.html
+[^23]: Minimap2.1. (n.d.). https://lh3.github.io/minimap2/minimap2.html
+[^24]: samtools – Bioinformatics guidance page (n.d.).https://scienceparkstudygroup.github.io/ibedbioinformaticspage/source/core_tools/samtools.html
+[^25]: Variant calling and genotyping with bcftools | MSc Genomic Medicine CM4 module. (n.d.).https://www.chg.ox.ac.uk/bioinformatics/training/msc_gm/2024/live/bioinformatics_pipelines_for_NGS_data/extras/variant_calling/variant_calling_with_bcftools/
+[^26]: Robinson, J. T., Thorvaldsdóttir, H., Wenger, A. M., Zehir, A., & Mesirov, J. P. (2017). Variant Review with the Integrative Genomics Viewer. Cancer research, 77(21), e31–e34. https://doi.org/10.1158/0008-5472.CAN-17-0337
+[^27]: Shen, W., Sipos, B., & Zhao, L. (2024). SeqKit2: A Swiss army knife for sequence and alignment processing. iMeta, 3(3), e191. https://doi.org/10.1002/imt2.191
 
 ## Software Versions & Reproducibility
 Software used for the analysis was installed via **Bioconda** and **Conda-forge** and executed within a conda environment (**Miniconda**) on an **Linux System**.
