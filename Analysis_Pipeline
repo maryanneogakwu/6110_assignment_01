@@ -1,0 +1,64 @@
+#!/bin/bash
+# Salmonella enterica Long Read Genome Analysis Pipeline
+
+## Part 1
+## Download raw reads
+wget https://sra-downloadb.be-md.ncbi.nlm.nih.gov/sos7/sra-pub-run-38/SRR032/32410/SRR32410565/SRR32410565.1
+
+# Reads were in SRA format so they needed to be converted to fastq format to be readable and useable.
+# Conversion was done using SRAtools in a conda environment
+
+conda activate
+conda install -c bioconda sra-tools=3.0.5
+
+fasterq-dump SRR32410565.1
+spots read      : 196,031
+reads read      : 196,031
+reads written   : 196,031
+
+# Checking whether the conversion was successful
+
+ls
+SRR32410565.1  SRR32410565.1.fastq
+
+#Checking the fastq file 
+
+seqtk fqchk SRR32410565.1.fastq | head
+min_len: 9; max_len: 58041; avg_len: 4128.41; 50 distinct quality values
+POS	#bases	%A	%C	%G	%T	%N	avgQ	errQ	%low	%high
+ALL	809296219	23.9	26.1	26.1	23.9	0.0	41.1	18.9	10.5	89.5
+1	196031	92.2	2.2	3.7	1.8	0.0	33.3	15.9	20.3	79.7
+2	196031	19.5	29.8	31.6	19.1	0.0	34.3	16.1	19.1	80.9
+3	196031	10.4	51.2	10.3	28.2	0.0	35.4	16.6	17.0	83.0
+4	196031	14.5	35.7	34.4	15.4	0.0	35.7	16.5	17.1	82.9
+5	196031	28.8	10.8	50.5	9.9	0.0	36.3	16.7	16.3	83.7
+
+## Dowload the refernce genome
+
+conda create -n ncbi_datasets
+conda activate ncbi_datasets
+conda install -c conda-forge ncbi-datasets-cli
+datasets download genome accession GCF_000006945.2 --include genome --filename salm_LT2.zip
+
+## Part 2
+## Quality assessment of raw reads using Nanoplot
+
+conda activate genome_assembly
+NanoPlot --fastq SRR32410565.1.fastq -o nanoplot_output/
+xdg-open nanoplot_output/NanoPlot-report.html
+
+#Filtering the raw reads using Filtlong to determine the effect it may have on assembly
+
+filtlong --min_length 1000 --keep_percent 90 -q 20 SRR32410565.1.fastq > SRR32410565.1_q20.fastq
+
+Scoring long reads
+  196,031 reads (809,296,219 bp)
+Filtering long reads
+  target: 728,366,597 bp
+  keeping 728,368,390 bp
+Outputting passed long reads
+
+ls
+nanoplot_output  SRR32410565.1  SRR32410565.1.fastq  SRR32410565.1_q20.fastq
+
+xdg-open SRR32410565.1_output_q20/NanoPlot-report.html
