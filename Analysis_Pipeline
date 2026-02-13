@@ -47,7 +47,8 @@ conda activate genome_assembly
 NanoPlot --fastq SRR32410565.1.fastq -o nanoplot_output/
 xdg-open nanoplot_output/NanoPlot-report.html
 
-#Filtering the raw reads using Filtlong to determine the effect it may have on assembly
+## Part 3
+## Filtering the raw reads using Filtlong to determine the effect it may have on assembly
 
 filtlong --min_length 1000 --keep_percent 90 -q 20 SRR32410565.1.fastq > SRR32410565.1_q20.fastq
 
@@ -62,3 +63,125 @@ ls
 nanoplot_output  SRR32410565.1  SRR32410565.1.fastq  SRR32410565.1_q20.fastq
 
 xdg-open SRR32410565.1_output_q20/NanoPlot-report.html
+
+## Part 4
+## Genome assembly
+#Number of threads 4, genome size is -809.3m, -hq because it raw reads from Oxford nanopore are expected to be already of higher quality high quality.
+
+flye --nano-hq SRR32410565.1.fastq \
+--genome-size 809.3m \
+--threads 4 \
+--out-dir SRR32410565_flye_out
+
+##  Part 5 
+## Alignment using minimap2
+
+conda install -c bioconda minimap2
+
+# Mapping the assembled genome to the refernce genome
+minimap2 -ax asm5  -t 4 GCF_000006945.2_ASM694v2_genomic.fna  assembly.fasta > Sal_aln.sam
+
+# Mapping the raw reads to the refernce genome
+minimap2 -ax map-ont -t 4 GCF_000006945.2_ASM694v2_genomic.fna SRR32410565.1.fastq > reads_ref_aln.sam
+
+## Part 6
+## Assembly evaluation using Seqkit
+
+seqkit stats assembly.fasta
+file            format  type  num_seqs    sum_len  min_len    avg_len    max_len
+assembly.fasta  FASTA   DNA          3  5,104,812  109,059  1,701,604  3,318,776
+
+## Part 7
+## Preprocessing for Variant Calling using Samtools
+
+conda install -c bioconda samtools
+samtools view -bS reads_ref_aln.sam -o reads_ref_aln.bam
+samtools sort reads_ref_aln.sam -o reads_ref_aln.sorted.bam
+samtools index reads_ref_aln.sorted.bam
+
+## Part 8 
+## Variant Calling using Bcftools
+
+conda install -c bioconda bcftools
+bcftools mpileup -f GCF_000006945.2_ASM694v2_genomic.fna --max-depth 2000 reads_ref_aln.sorted.bam | \ bcftools call -mv -Ov -o variants.vcf
+bcftools stats variants2000.2.vcf | grep ^SN
+SN	0	number of samples:	1
+SN	0	number of records:	12328
+SN	0	number of no-ALTs:	0
+SN	0	number of SNPs:	12245
+SN	0	number of MNPs:	0
+SN	0	number of indels:	83
+SN	0	number of others:	0
+SN	0	number of multiallelic sites:	142
+SN	0	number of multiallelic SNP sites:	139
+
+# Variant calling was also carried with a change in the max-depth flag to observe the differences
+bcftools mpileup -f GCF_000006945.2_ASM694v2_genomic.fna --max-depth 200 reads_ref_aln.sorted.bam | bcftools call -mv -Ov -o variants200.vcf
+
+grep -v "^#" variants200.vcf | wc -l
+12205
+bcftools stats variants200.vcf | grep ^SN
+SN	0	number of samples:	1
+SN	0	number of records:	12205
+SN	0	number of no-ALTs:	0
+SN	0	number of SNPs:	12120
+SN	0	number of MNPs:	0
+SN	0	number of indels:	85
+SN	0	number of others:	0
+SN	0	number of multiallelic sites:	136
+SN	0	number of multiallelic SNP sites:	133
+
+
+
+## Part 9
+## Visualization using IGV
+
+conda install bioconda::igv
+
+# Load Genome from File - `GCF_000006945.2_ASM694v2_genomic.fna`
+# Load from File - `reads_ref_aln.sorted.bam` and `variants.vcf`
+
+## Part 10 
+## Generating Files used for R visualization
+
+#To be used to construct a heatmap showing the variant positions
+bcftools query -f '%CHROM\t%POS\n' variants.vcf > variant_positions.tsv
+in r -library(ggplot2)
+
+variants <- read.table("variant_positions.tsv", header=FALSE)
+colnames(variants) <- c("chrom", "pos")
+
+#To be used to create a variant density plot
+awk '{
+    window = int($2/10000);
+    counts[window]++
+}
+END {
+    for (w in counts)
+        print w*10000, counts[w]
+}' variant_positions.tsv | sort -n > variant_density.tsv
+
+
+#To be used to construct a Rainfall plot to show the distribution of SNPs, insertions and deletions
+#Extracting the relevant fields
+bcftools query -f '%CHROM\t%POS\t%REF\t%ALT\n' variants2000.2.vcf > variant_types.tsv
+
+#Adding variant types (SNP / INS / DEL)
+awk 'BEGIN{OFS="\t"}
+{
+  if(length($3)==1 && length($4)==1) type="SNP";
+  else if(length($3)<length($4)) type="INS";
+  else type="DEL";
+  print $1,$2,$3,$4,type
+}' variant_types.tsv > variants_for_plots.tsv
+
+#Sort by chromosome and position
+sort -k1,1 -k2,2n variants_for_plots.tsv > variants_sorted.tsv
+
+
+ ## Output files
+variant_positions.tsv
+variant_density.tsv
+Variant_types.tsv
+Variants_for_plots.tsv
+Variants_sorted.tsv
