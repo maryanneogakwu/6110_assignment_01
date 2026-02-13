@@ -1,6 +1,49 @@
 ## _Salmonella enterica_ Genome Assembly
 **Maryanne Ogakwu**
 **1395098**
+# Table of Contents
+
+1. [Overview](#overview)
+2. [1 | Introduction](#1--introduction)
+   1. [Genome Assembly](#genome-assembly)
+   2. [Whole Genome Alignment](#whole-genome-alignment)
+   3. [Short read sequences](#short-read-sequences)
+   4. [Long read sequences](#long-read-sequences)
+   5. [Goals of Genome Assembly](#goals-of-genome-assembly)
+6. [Challanges in Genome assembly and alignment](#challanges-in-genome-assembly-and-alignment)
+7. [Proposed Algorithms, Pros and Cons](#proposed-algorithms-pros-and-cons)
+   1. [BacSeq](#bacseq)
+       - [Pros of the BacSeq package](#pros-of-the-bacseq-package)
+       - [Cons of the BacSeq package](#cons-of-the-bacseq-package)
+   2. [Pangaea](#pangaea)
+       - [Pros of Pangaea package](#pros-of-pangaea-package)
+       - [Cons of Pangaea package](#cons-of-pangaea-package)
+   3. [Ragout](#ragout)
+       - [Pros of Ragout](#pros-of-ragout)
+       - [Cons of Ragout](#cons-of-ragout)
+8. [Planned workflow](#planned-workflow)
+9. [Packeges used for Analysis](#packeges-used-for-analysis)
+   1. [Flye (Genome Assembly)](#flye-genome-assembly)
+   2. [Minimap2 (Alignment)](#minimap2-alignment)
+   3. [SeqKit (Assembly Quality Assessment)](#seqkit-assembly-quality-assessment)
+   4. [Samtools (SAM/BAM Processing)](#samtools-sambam-processing)
+   5. [BCFtools (Variant Calling)](#bcftools-variant-calling)
+   6. [IGV (Visualization)](#igv-visualization)
+10. [Methods](#methods)
+    1. [1. Data Acquisition](#1-data-acquisition)
+    2. [2. Raw read Quality Control](#2-raw-read-quality-control)
+    3. [3. De novo Genome Assembly using Flye](#3-de-novo-genome-assembly-using-flye)
+    4. [4. Genome Alignment](#4-genome-alignment)
+    5. [5. Assembly Evaluation](#5-assembly-evaluation)
+    6. [6. Variant Calling](#6-variant-calling)
+    7. [7. Visualization](#7-visualization)
+11. [Results](#results)
+12. [Discussion](#discussion)
+    1. [Assembly Quality](#assembly-quality)
+    2. [The IGV inspections](#the-igv-inspections)
+    3. [Genome-wide visualizations](#genome-wide-visualizations)
+13. [References](#references)
+14. [Software Versions & Reproducibility](#software-versions--reproducibility)
 
 ## Overview
 This repository is for my BINF 6110 assignment 1. It will contain a Markdown file detailing genome assembly and challanges in genome assembly and alignment with a reference genome.  Down the line it will be updated with the code I'll use t assemble a specified genome and the alignment. The project will involve assembly of raw Oxford Nanopore reads, gene mapping of raw reads to the refernce genome,and visualization of variants (SNPs) displayed between the raw reads nad the reference genome. Both the raw and _Salmonella enterica_ raw reads and the _Salmonella enterica_ were obtained through the NCBI database.
@@ -13,7 +56,7 @@ Whole  Genome Alignment involves  aligning the entire genomes from different spe
 Short read and long reads have been used based on the type of analysis being run and the desired results. 
 #### Short read sequences
 Short reads have been used for their high precision, but they have issues when it comes down to assembly and alignment. this is due to their propensity for multiple mapping on the same genome, leading to gaps and mismatches [^17].Tools like BOWTIE2 and BWA have been developed for short reads, being able to process large data and pinpont small-scale geneticc variations with high accuracy [^10].  
-### Long read sequences
+#### Long read sequences
 Long reads are thousands of base pairs and have been shown to enhance genome assembly and facilitate alignment of challanging regions. Though they have high error rates and present challanges for for alignment precision [^9]. PacBio's SMRT Analysis, Oxford  Nanoporee MinION -based Minimap2 are designed for long reads and are good at detangling complex genomic architectures and reducing gaps in assemblies [^12].
 
 ##   Goals of Genome Assembly  
