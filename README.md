@@ -50,21 +50,19 @@ This repository for BINF 6110 Assignment 1 details the genome assembly of high-q
 
 ## **1 Introduction**
 #### Genome Assembly
-Genome Assembly Involves constructing an organism's genome using fragments of sequenced DNA, called sequence reads [^1]. Common sequencing methods include Illumina sequencing, Oxford Nanopore, PacBio sequencing and Sanger sequencing, which pioneered sequencing techniques in the 70s [^7]. 
+Genome Assembly involves constructing an organism's genome using fragments of sequenced DNA, called sequence reads [^1]. Common sequencing methods include Illumina sequencing, Oxford Nanopore, PacBio sequencing and Sanger sequencing, which pioneered sequencing techniques in the 70s [^7]. 
 #### Genome Alignment
-Genome Alignment involves aligning assembled genomes to homologous sequences or pre-existing genomes from organisms in the same species [^5]. It helps give global perspective on genomic similarity and variation, providing insights into genetic diseases, evolutionary relationships and gene function [^13].  
-Short read and long reads have been used based on the type of analysis being run and the desired results. 
+Genome alignment (specifically whole-genome alignment) compares an assembled sequence against a reference or another assembly to identify conserved regions and differences. It is the standard method for identifying SNPs, insertions/deletions (indels), and structural variations, which are the drivers of evolutionary change and genetic diseases. [^5]. It helps give global perspective on genomic similarity and variation, providing insights into genetic diseases, evolutionary relationships and gene function [^13]. Short reads and long reads have been used based on the type of analysis being run and the desired results. 
+
 #### Short read sequences
 
-Genome alignment (specifically whole-genome alignment) compares an assembled sequence against a reference or another assembly to identify conserved regions and differences. It is the standard method for identifying SNPs, insertions/deletions (indels), and structural variations, which are the drivers of evolutionary change and genetic diseases.
-
-Short reads are typically 50-300 bp, and have been used for their high precision, but they have issues when it comes to assembly and alignment. This is due to their propensity for multiple mapping on the same region of the genome, leading to gaps and mismatches [^17].Tools like BOWTIE2 and BWA have been developed for short reads, being able to process large data and pinpoint small-scale genetic variations with high accuracy [^10].  
+Short reads are typically 50-300 bp, and have been used for their high precision, but they have issues when it comes to assembly and alignment. This is due to their propensity for multiple mapping on the same region of the genome, leading to gaps and mismatches [^17].Tools like Bowtie2 and BWA have been developed for short reads, being able to process large data and pinpoint small-scale genetic variations with high accuracy [^10].  
 #### Long read sequences
-Long reads are upwards of 10,000 bp and have been shown to enhance genome assembly and facilitate alignment of challanging regions. Though they have high error rates and present challanges for alignment precision [^9]. PacBio's SMRT Analysis, Oxford  Nanoporee MinION -based Minimap2 are designed for long reads and are good at detangling complex genomic architectures and reducing gaps in assemblies [^12].
+Long reads are upwards of 10,000 bp and have been shown to enhance genome assembly and facilitate alignment of challanging regions. Though they have high error rates and present challanges for alignment precision [^9]. PacBio's SMRT Analysis, Oxford  Nanopore MinIONand tools such as Minimap2 are designed for long reads are designed for long reads and are good at detangling complex genomic architectures and reducing gaps in assemblies [^12].
 
 ##   Goals of Genome Assembly  
 As stated by the Biology Insights Team (2025) [^2], there are a variety of ways in which genomic research has been applied and utilized, ranging from gene annotation to agriultural productivity
-1. Genome annotaion to identify locations of genes and other functional elements like promoters, CDS, and termination sites as well as predicting the functions.  
+1. Genome annotaion identifies the locations of genes and other functional elements like promoters, CDS, and termination sites as well as predicting the functions.  
 2. Identification of gene variations and mutations like SNPs that could cause diseases, aiding in development of diagnostic tools and targeted therapies.  
 3. Comparative genomic analysis of species to understand diversity and determine evolutionary relationships, adaptations and unique biological features
 4. Developments in crop breeding to produce crops that have desirable characteristics like pest resistance, higher yield and greater nutritional value.
@@ -75,14 +73,14 @@ While both short-read and long-read sequencing are powerful, they face distinct 
 2. DNA fragmentation: Short Read sequencing technologies often produce fragmented, incomplete assemblies, leading to misalignment. [^16].  
 3. Repeatitve DNA sequences: these make it dificult for assembly algorithms to determine and arrange the fragment reads in the correct order, leading to misassemblies and gaps. [^17].
 4. Shorter reads offer less overlap information and require higher coverage to achieve a good assembly. [^14].
-5. Computational Demands: long read and optical mapping techniques used in building robust chromosome level scaffolds are technically challenging and needs high quality data, which can be limited by computational errors and increased costs. [^4].
-6. Maps with Low resolution: these may be too coarse to give accurate positioning and orientation of relatively short sequence contigs. [^6].
+5. Computational Demands: long read and optical mapping techniques used in building robust chromosome level scaffolds are technically challenging and need high-quality data, which can be limited by computational errors and increased costs. [^4].
+6. Maps with Low-resolution: these may be too coarse to give accurate positioning and orientation of relatively short sequence contigs. [^6].
 7. Dependence on data quality: Poor-quality sequencing reads or contaminated samples can lead to fragmented assemblies and unreliable downstream results (Sequencing Read Quality Control).
 
 ## Proposed Algorithms, Pros and Cons  
 
 ### BacSeq  
-The Paper "BacSeq: A User-Friendly Automated Pipeline for Whole-Genome Sequence Analysis of Bacterial Genomes" by Chukamnerd et al. in 2023 [^3], presented an all in one package that carried out multiple funtions and was beginner friendly. It is an open source, java-based GUI that combines multiple tools to simplify bacterial whole genome sequencing. It can performing quality checks, genome assembly, evaluation, annotation, drug resistance and virulence gene detection. The BacSeq pipeline supports pan-genome analysis, SNP-based phylogenetic tree construction, and detection of CAZymes and CRISPR-Cas systems.  
+The Paper "BacSeq: A User-Friendly Automated Pipeline for Whole-Genome Sequence Analysis of Bacterial Genomes" by Chukamnerd et al. in 2023 [^3], presented an all in one package that carried out multiple funtions and was beginner friendly. It is an open source, java-based GUI that combines multiple tools to simplify bacterial whole genome sequencing. It can perform quality checks, genome assembly, evaluation, annotation, drug resistance and virulence gene detection. The BacSeq pipeline supports pan-genome analysis, SNP-based phylogenetic tree construction, and detection of CAZymes and CRISPR-Cas systems.  
 ####  Pros of the BacSeq package  
 1. The GUI based design reduces reliance on command-line use and makes it is accessible to non-bioinformaticians.  
 2. The program supports hybrid assembly, integrating short and long read sequences, further improving genome completedness.  
@@ -103,7 +101,7 @@ Pangaea is a de novo metagenomic assembler introduced in the paper "Exploring hi
 2. There is more focus on gut microbiomes as most real-data benchmarking is on human gut samples so the program's performance in other complex environments like soil, marine and host-associated niches remains to be fully demonstrated.
 
 ### Ragout  
-This is a reference assisted scoffolding tool introduced in the paper "Ragout—a reference-assisted assembly tool for bacterial genomes" by Kolmogorov et. al. in 2014 [^11]. Ragout is an open-source bioinformatics tool designed to improve draft bacterial genome assemblies by ordering and orienting contigs using multiple complete reference genomes. Ragout is its use of multi-scale synteny blocks combined with iterative scaffolding and assembly graph refinement, allowing it to incorporate both large and small contigs while minimizing misassemblies. It uses multiple related bacterial genomes for assembly, rather than using just a single refernce genome, incorporating evolutionary relationships among references through a phylogenetic tree and uses a genome rearrangement framework to infer the correct ordering of contigs, even in the presence of structural variations such as inversions and translocations.    
+This is a reference assisted scoffolding tool introduced in the paper "Ragout—a reference-assisted assembly tool for bacterial genomes" by Kolmogorov et. al. in 2014 [^11]. Ragout is an open-source bioinformatics tool designed to improve draft bacterial genome assemblies by ordering and orienting contigs using multiple complete reference genomes. A key feature of Ragout is its use of multi-scale synteny blocks combined with iterative scaffolding and assembly graph refinement, allowing it to incorporate both large and small contigs while minimizing misassemblies. It uses multiple related bacterial genomes for assembly, rather than using just a single refernce genome, incorporating evolutionary relationships among references through a phylogenetic tree and uses a genome rearrangement framework to infer the correct ordering of contigs, even in the presence of structural variations such as inversions and translocations.    
 
 #### Pros of Ragout
 1. The use of multiple refernce genomes reduces errors caused by reliance on a single refernce, ultimately improving robustness in the presence of genome arrangements.  
@@ -119,7 +117,7 @@ This is a reference assisted scoffolding tool introduced in the paper "Ragout—
 2. Raw read Quality Control: carried out with NanoPlot and FastQC, to assess read length and quality to ensure it is suitable for assembly.
 3. De novo Genome Assembly: generating a draft assembly of contigs using the Flye tool. 
 4. Reference-Assisted Scaffolding with Ragout: order and orient contigs using one or more closely related Salmonella reference genomes to Produce a more complete and biologically accurate genome assembly.
-5. Assembly Evaluation: confirmation of assembly quality, completedness and contiguity.
+5. Assembly Evaluation: confirmation of assembly quality, completeness and contiguity.
 6. Variant Calling: alignment to detect genetic differences between your isolate and the reference genome using Minimap2.
 7. Visualization: Visualize genome alignment and structural differences and interpret results to support biological conclusions using IGV for variants and Bandage for an assembly graph
 
@@ -147,7 +145,7 @@ Cons: No alignment or accuracy assessment, limited to descriptive metrics [^27].
 
 ## Samtools (SAM/BAM Processing)
 
-Samtools [samtools (v1.23)](https://github.com/samtools/samtools) used to convert, sort, and index alignment files from SAM to BAM format. It is essential for preparing alignment files for efficient access and visualization. The tool allows filtering, viewing, and manipulating large alignment datasets quickly. However, command syntax can be unintuitive and version mismatches can cause library errors. It also does not perform analysis beyond file handling [^24].
+Samtools [samtools (v1.21)](https://github.com/samtools/samtools) used to convert, sort, and index alignment files from SAM to BAM format. It is essential for preparing alignment files for efficient access and visualization. The tool allows filtering, viewing, and manipulating large alignment datasets quickly. However, command syntax can be unintuitive and version mismatches can cause library errors. It also does not perform analysis beyond file handling [^24].
 
 Pros: Fast file processing, essential for BAM handling, widely compatible [^24].
 Cons: Cryptic commands, dependency issues, not analytical [^24]. 
@@ -186,7 +184,7 @@ flye --nano-hq SRR32410565.1.fastq \
 ~~~
 
 ### 4. Genome Alignment 
-The raw reads were aligned using [Minimap2 (v2.30)](https://github.com/lh3/minimap2). Two presets were used, the first to map the raw reads to the reference genome used the flags `---x map-ont` to adjust the algorithm for long noisy reads such as Oxford Nanopore reads. The second was for complete genome to genome alignment by mapping my assembled genome to my refernce genome. The flags used was `-as asm5` which is a preset optimized for assembly vs assembly aligment with <5% sequence difference.
+The raw reads were aligned using [Minimap2 (v2.30)](https://github.com/lh3/minimap2). Two presets were used, the first to map the raw reads to the reference genome used the flags `-x map-ont` to adjust the algorithm for long noisy reads such as Oxford Nanopore reads. The second was for complete genome to genome alignment by mapping my assembled genome to my refernce genome. The flags used were `-as asm5` which is a preset optimized for assembly vs assembly aligment with <5% sequence difference.
 ~~~
 minimap2 -ax map-ont -t 4 GCF_000006945.2_ASM694v2_genomic.fna SRR32410565.1.fastq > reads_ref_aln.sam
 minimap2 -ax asm5  -t 4 GCF_000006945.2_ASM694v2_genomic.fna  assembly.fasta > Sal_aln.sam
@@ -205,7 +203,6 @@ The table below summarizes key metrics of the genome assembly: the number of con
 Variant calling was performed between the raw reads and the NCBI refernece genome. SAM files generated from the assembly were converted to BAM format, sorted and indexed using [samtools (v1.23)](https://github.com/samtools/samtools). For variant calling, raw Nanopore reads were aligned directly to the reference genome using minimap2 with the map-ont preset, as variant detection requires mapping sequencing reads to reference coordinates rather than comparing assembled contigs [^19]
 ~~~
 samtools view -bS reads_ref_aln.sam -o reads_ref_aln.bam
-z
 samtools sort reads_ref_aln.sam -o reads_ref_aln.sorted.bam
 
 samtools index reads_ref_aln.sorted.bam
@@ -264,7 +261,7 @@ theme_minimal()
 <img width="1857" height="894" alt="snp identified" src="https://github.com/user-attachments/assets/60e65d1f-dfcd-4660-b85e-a6eeba5c8ab8" />
 
 **Figure 1:** **IGV Visualisation of a prominent SNP present in the reads**.
-There are significatly marked SNPS at position NC_003197.2:103,018. with a base quality of QV 50. This shows that the reads have an insertion of G in the place of T. The G in the reads differ from the reference sequence in greater than 20 percent (20%) the quality weigthed reads. 99% of the reads have Guanine as an insertion, with a total count of 179 Guanine insertions. 
+At position NC_003197.2:103,018, a high-confidence SNP is observed where guanine replaces the reference thymine with a base quality of QV 50. This substitution is supported by 99% of the reads (a total count of 179), significantly exceeding the 20% quality-weighted threshold used to distinguish true variants from sequencing background. Rather than an insertion, this represents a clean base-pair swap, confirming a clear genetic divergence from the reference sequence at this specific locus.
 
 <img width="1854" height="890" alt="real fake" src="https://github.com/user-attachments/assets/4c4b4223-43d1-4ca2-9fca-56fda24f3c10" />
 
@@ -278,22 +275,22 @@ The x-axis shows genome position, and the y-axis shows how many variants occur i
 
 <img width="455" height="305" alt="variant density heatmap" src="https://github.com/user-attachments/assets/3140502e-3368-42f3-a6ce-082c889bea90" /> 
 
-**Figure 3** **Heatmap showing the density and distribution  of variants in the alignment**.
+**Figure 4** **Heatmap showing the density and distribution  of variants in the alignment**.
 This heatmap shows how variants are distributed along the genome in 10 kb windows. Most regions have few variants, indicating strong similarity to the reference genome. Bright regions represent mutation hotspots where variants are highly concentrated.
 
 <img width="1000" height="500" alt="Rainfall plot" src="https://github.com/user-attachments/assets/cd5846b1-fe57-463b-92a0-44228c70c66b" />
 
-**Figure 4** **Rainfall Plot showing the distribution of SNPs, insertions and delections** 
+**Figure 5** **Rainfall Plot showing the distribution of SNPs, insertions and deletions** 
 This rainfall plot displays each variant by genomic position on the x-axis and the log10 distance to the previous variant on the y-axis, allowing spatial mutation patterns to be visualized across NC_003197.2 and NC_003277.2. Lower y-values indicate variants occurring very close together, revealing mutation hotspots and regions of high variant density along the genome. While higher y-values represent large gaps between variants, highlighting conserved regions with relatively few sequence changes. The faceted layout shows that the plasmid (NC_003277.2) exhibits tighter clustering of variants compared to the chromosome, suggesting localized regions of higher variability. Color coding distinguishes SNPs, insertions, and deletions, demonstrating that SNPs dominate the clustered regions while indels are more sparsely distributed.
 
 ## Discussion
 #### Assembly Quality
-The assembly produced four contigs with high sequencing coverage, indicating strong read support and reliable consensus generation across the genome. The two largest contigs (3.32 Mb and 1.68 Mb) show coverage above 120× and are marked as non-circular, suggesting they represent the primary chromosomal segments that were not fully resolved into a single continuous sequence. Their large sizes and absence of repeats imply that the assembler was able to resolve most genomic complexity, but structural features such as unresolved joins or complex regions likely prevented full circularization. The third contig (109 kb) is marked as circular with very high coverage (188×), strongly indicating that this sequence represents a plasmid. Circularity combined with elevated coverage is characteristic of plasmid DNA, as plasmids often exist in multiple copies within bacterial cells, leading to higher read depth relative to the chromosome. The clean assembly of this contig without repeats further supports that the assembler successfully reconstructed this plasmid as a complete, biologically meaningful unit.
+The assembly produced three contigs with high sequencing coverage, indicating strong read support and reliable consensus generation across the genome. The two largest contigs (3.32 Mb and 1.68 Mb) show coverage above 120× and are marked as non-circular, suggesting they represent the primary chromosomal segments that were not fully resolved into a single continuous sequence. Their large sizes and absence of repeats imply that the assembler was able to resolve most genomic complexity, but structural features such as unresolved joins or complex regions likely prevented full circularization. The third contig (109 kb) is marked as circular with very high coverage (188×), strongly indicating that this sequence represents a plasmid. Circularity combined with elevated coverage is characteristic of plasmid DNA, as plasmids often exist in multiple copies within bacterial cells, leading to higher read depth relative to the chromosome. The clean assembly of this contig without repeats further supports that the assembler successfully reconstructed this plasmid as a complete, biologically meaningful unit.
 The smallest contig (6.2 kb) displays lower coverage (73×) and is flagged as containing repeats. This suggests it may represent a repetitive or low-complexity region that the assembler could not confidently place within the larger chromosomal contigs. Such small repeat-associated contigs are common in long-read assemblies and often arise from unresolved repeat structures or mobile genetic elements that cannot be uniquely anchored in the genome graph.
 Overall, the assembly demonstrates strong workflow success: high coverage across all contigs, successful identification of a circular plasmid, and near-complete reconstruction of the chromosomal content. The presence of two large non-circular chromosomal contigs and one small repeat contig indicates minor fragmentation likely due to complex genomic regions rather than insufficient data quality. This reflects a high-quality long-read assembly where most biological structure is preserved, with only small unresolved repeat-driven segments remaining.
 
 #### The IGV inspections
-(Figures 1 and 2) validate the reliability of the variant calls and highlight the importance of manual curation alongside automated pipelines. At **NC_003197.2:103,018**, the strong read support and high base quality confirm a true SNP where guanine consistently replaces the reference thymine, demonstrating accurate alignment and confident variant detection. In contrast, the site flagged as “heterozygous” at **NC_003197.2:3,963,935** illustrates a common visualization artifact in haploid bacterial genomes, where minor sequencing noise from ONT reads can mimic mixed alleles. This reinforces that apparent heterozygosity in bacteria should be interpreted cautiously and assessed in the context of read proportions and sequencing error profiles.
+(Figures 1 and 2) validate the reliability of the variant calls and highlight the importance of manual curation alongside automated pipelines. At **NC_003197.2:103,018**, the strong read support and high base quality confirm a true SNP where guanine consistently replaces thymine in the reference sequence, demonstrating accurate alignment and confident variant detection. In contrast, the site flagged as “heterozygous” at **NC_003197.2:3,963,935** illustrates a common visualization artifact in haploid bacterial genomes, where minor sequencing noise from ONT reads can mimic mixed alleles. This reinforces that apparent heterozygosity in bacteria should be interpreted cautiously and assessed in the context of read proportions and sequencing error profiles.
 
 #### Genome-wide visualizations 
 (Figures 3 and 4) further reveal that most of the genome shows very low variant density, indicating strong similarity between the assembled genome and the reference. However, distinct peaks in the density plot and bright regions in the heatmap identify mutation hotspots where differences are concentrated within specific 10 kb windows. These localized clusters suggest regions of elevated evolutionary change rather than uniform divergence across the chromosome. Such patterns are typical of genomic regions under selective pressure, mobile genetic elements, or recombination-prone sites.
@@ -338,14 +335,14 @@ All analyses were performed using open-source software. Software versions and pa
 
  Tool | Version |
 |------|---------|
-| SRA -tools | 3.0.5 |
+| SRA-tools | 3.0.5 |
 | Flye | 2.9.6 |
 | Seqkit | 2.10.1 |
 | NanoPlot | 1.46.1 |
 | Filtlong | 0.3.1 |
 | minimap2 | 2.30 |
 | samtools | 1.23 |
-| bcftools| 2.21 |
+| bcftools | 2.21 |
 | IGV | 2.19.7 |
-| R | 4.3.1 |
+| R | 4.5.1 |
 
