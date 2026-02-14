@@ -4,13 +4,13 @@
 # Table of Contents
 
 1. [Overview](#overview)
-2. [1 | Introduction](#1--introduction)
+2. [1 Introduction](#1--introduction)
    1. [Genome Assembly](#genome-assembly)
    2. [Whole Genome Alignment](#whole-genome-alignment)
    3. [Short read sequences](#short-read-sequences)
    4. [Long read sequences](#long-read-sequences)
    5. [Goals of Genome Assembly](#goals-of-genome-assembly)
-6. [Challanges in Genome assembly and alignment](#challanges-in-genome-assembly-and-alignment)
+6. [Challenges in Genome assembly and alignment](#challanges-in-genome-assembly-and-alignment)
 7. [Proposed Algorithms, Pros and Cons](#proposed-algorithms-pros-and-cons)
    1. [BacSeq](#bacseq)
        - [Pros of the BacSeq package](#pros-of-the-bacseq-package)
@@ -46,40 +46,43 @@
 14. [Software Versions & Reproducibility](#software-versions--reproducibility)
 
 ## Overview
-This repository is for my BINF 6110 assignment 1. It will contain a Markdown file detailing genome assembly and challanges in genome assembly and alignment with a reference genome.  Down the line it will be updated with the code I'll use t assemble a specified genome and the alignment. The project will involve assembly of raw Oxford Nanopore reads, gene mapping of raw reads to the refernce genome,and visualization of variants (SNPs) displayed between the raw reads nad the reference genome. Both the raw and _Salmonella enterica_ raw reads and the _Salmonella enterica_ were obtained through the NCBI database.
+This repository for BINF 6110 Assignment 1 details the genome assembly of high-quality _Salmonella enterica_ Oxford Nanopore long reads and their alignment to an NCBI reference genome. The workflow involves the de novo assembly of raw reads, gene mapping to the reference sequence, and the visualization of resulting variants, such as insertions, deletions, and SNPs. All genomic data and reference sequences used in this project were obtained from the NCBI database.
 
 ## **1 Introduction**
 #### Genome Assembly
-Genome Assembly Involves reconstructing an organism's genome using fragments of sequenced DNA, called sequence reads [^1]. Common sequencing methods include Illumina sequencing, Oxford Nanopore, PacBio sequencing and Sangers sequencing, which pioneered sequencing techniques in the 70s [^7]. 
-#### Whole Genome Alignment
-Whole  Genome Alignment involves  aligning the entire genomes from different species or individuals within the same species [^5]. It helps give global perspective on genomic similarity and variation, providing insights into genetic diseases, evolutionary relationships and gene function [^13].  
+Genome Assembly Involves constructing an organism's genome using fragments of sequenced DNA, called sequence reads [^1]. Common sequencing methods include Illumina sequencing, Oxford Nanopore, PacBio sequencing and Sanger sequencing, which pioneered sequencing techniques in the 70s [^7]. 
+#### Genome Alignment
+Genome Alignment involves aligning assembled genomes to homologous sequences or pre-existing genomes from organisms in the same species [^5]. It helps give global perspective on genomic similarity and variation, providing insights into genetic diseases, evolutionary relationships and gene function [^13].  
 Short read and long reads have been used based on the type of analysis being run and the desired results. 
 #### Short read sequences
-Short reads have been used for their high precision, but they have issues when it comes down to assembly and alignment. this is due to their propensity for multiple mapping on the same genome, leading to gaps and mismatches [^17].Tools like BOWTIE2 and BWA have been developed for short reads, being able to process large data and pinpont small-scale geneticc variations with high accuracy [^10].  
+
+Genome alignment (specifically whole-genome alignment) compares an assembled sequence against a reference or another assembly to identify conserved regions and differences. It is the standard method for identifying SNPs, insertions/deletions (indels), and structural variations, which are the drivers of evolutionary change and genetic diseases.
+
+Short reads are typically 50-300 bp, and have been used for their high precision, but they have issues when it comes to assembly and alignment. This is due to their propensity for multiple mapping on the same region of the genome, leading to gaps and mismatches [^17].Tools like BOWTIE2 and BWA have been developed for short reads, being able to process large data and pinpoint small-scale genetic variations with high accuracy [^10].  
 #### Long read sequences
-Long reads are thousands of base pairs and have been shown to enhance genome assembly and facilitate alignment of challanging regions. Though they have high error rates and present challanges for for alignment precision [^9]. PacBio's SMRT Analysis, Oxford  Nanoporee MinION -based Minimap2 are designed for long reads and are good at detangling complex genomic architectures and reducing gaps in assemblies [^12].
+Long reads are upwards of 10,000 bp and have been shown to enhance genome assembly and facilitate alignment of challanging regions. Though they have high error rates and present challanges for alignment precision [^9]. PacBio's SMRT Analysis, Oxford  Nanoporee MinION -based Minimap2 are designed for long reads and are good at detangling complex genomic architectures and reducing gaps in assemblies [^12].
 
 ##   Goals of Genome Assembly  
-As stated by the Biology Insights Team (2025) [^2], there are a variety of ways in which genomic research has been  applied and utilized, ranging from gene annotation to agriultural productivity
+As stated by the Biology Insights Team (2025) [^2], there are a variety of ways in which genomic research has been applied and utilized, ranging from gene annotation to agriultural productivity
 1. Genome annotaion to identify locations of genes and other functional elements like promoters, CDS, and termination sites as well as predicting the functions.  
 2. Identification of gene variations and mutations like SNPs that could cause diseases, aiding in development of diagnostic tools and targeted therapies.  
-3. Comparative Genomic analysis of species to understand diversity between species and determine evolutionary relationships, adaptations and unique biological features
-4. Developments in Crop breeding to produce crops that have desirable characteristics like pest resistance, higher yield and greater nutritional value.
+3. Comparative genomic analysis of species to understand diversity and determine evolutionary relationships, adaptations and unique biological features
+4. Developments in crop breeding to produce crops that have desirable characteristics like pest resistance, higher yield and greater nutritional value.
 
-## Challanges in Genome assembly and alignment
-As powerful and efficient as long read and short read assemblies are, both techniques come with their drawbacks, especially when using a reference genome to conduct the alignment, as opposed to using de novo techniques. Somedrawbacks to connsider are:  
-1. Error prone refernce: construction of a reference genome from improper or incomplete sequencing can lead to errors that mislead research and affect the accuracy of genetic studies [^8].
-2. DNA fragmentation: Short Read sequencing technologies often produce fragmented, incomplete assemblies, leading to misalignment [^16].  
-3. Repeatitve DNA sequences: these make it dificult for assembly algorithms to determine and arrange the fragment reads in the correct order, leading to misassemblies and gaps [^17].
-4. Shorter reads offer less overlap information and require higher coverage to achieve a good assembly [^14].
-5. Computational Demands: long read and optical mapping techniques used in building robust chromosome level scaffolds are technically challenging and needs high quality data, which can be limited by computational errors and increased costs [^4].
-6. Maps with Low resolution: these may be too coarse to give accurate positioning and orientation of relatively short sequence contigs [^6].
+## Challenges in Genome assembly and alignment
+While both short-read and long-read sequencing are powerful, they face distinct challenges—particularly regarding reference bias and structural inaccuracies when using reference-based alignment instead of de novo assembly techniques. Some drawbacks to consider are: 
+1. Error prone reference: construction of a reference genome from improper or incomplete sequencing can lead to errors that mislead research and affect the accuracy of genetic studies. [^8].
+2. DNA fragmentation: Short Read sequencing technologies often produce fragmented, incomplete assemblies, leading to misalignment. [^16].  
+3. Repeatitve DNA sequences: these make it dificult for assembly algorithms to determine and arrange the fragment reads in the correct order, leading to misassemblies and gaps. [^17].
+4. Shorter reads offer less overlap information and require higher coverage to achieve a good assembly. [^14].
+5. Computational Demands: long read and optical mapping techniques used in building robust chromosome level scaffolds are technically challenging and needs high quality data, which can be limited by computational errors and increased costs. [^4].
+6. Maps with Low resolution: these may be too coarse to give accurate positioning and orientation of relatively short sequence contigs. [^6].
 7. Dependence on data quality: Poor-quality sequencing reads or contaminated samples can lead to fragmented assemblies and unreliable downstream results (Sequencing Read Quality Control).
 
 ## Proposed Algorithms, Pros and Cons  
 
 ### BacSeq  
-The Paper "BacSeq: A User-Friendly Automated Pipeline for Whole-Genome Sequence Analysis of Bacterial Genomes" by Chukamnerd et. al. in 2023 [^3], presented an all in one package that carried out multiple funtions and was beginner friendly. It is an open source, java-based GUI that combines multiple tools to simplify bacterial whole genome sequencing. It can performing quality checks, genome assembly, evaluation, annotation, drug resistance and virulence gene detection. The BacSeq pipeline supports pan-genome analysis, SNP-based phylogenetic tree construction, and detection of CAZymes and CRISPR-Cas systems.  
+The Paper "BacSeq: A User-Friendly Automated Pipeline for Whole-Genome Sequence Analysis of Bacterial Genomes" by Chukamnerd et al. in 2023 [^3], presented an all in one package that carried out multiple funtions and was beginner friendly. It is an open source, java-based GUI that combines multiple tools to simplify bacterial whole genome sequencing. It can performing quality checks, genome assembly, evaluation, annotation, drug resistance and virulence gene detection. The BacSeq pipeline supports pan-genome analysis, SNP-based phylogenetic tree construction, and detection of CAZymes and CRISPR-Cas systems.  
 ####  Pros of the BacSeq package  
 1. The GUI based design reduces reliance on command-line use and makes it is accessible to non-bioinformaticians.  
 2. The program supports hybrid assembly, integrating short and long read sequences, further improving genome completedness.  
